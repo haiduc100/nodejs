@@ -1,0 +1,131 @@
+const express = require('express')            //  goi express vào để dùng
+
+const app = express()                         //  khỏi tạo app
+
+app.listen('4000')                            //  cấp cho app địa chỉ để nhận request
+
+=========================================================================
+
+req                 yêu cầu từ client gửi về server
+
+res                 phản hồi từ server trả về client
+
+res.send            gửi thông điệp về giao diện / HTML
+
+res.json(data)      gửi data json
+
+res.redirect(link)  điều hướng đến địa chỉ xác định
+
+res.sendFile(link)  gửi file về client
+                    link phải là tuyệt đối
+
+=========================================================
+
+app.use('/public', express.static(path.join(__dirname, './public')))
+
+xuất ra cả thư mục 
+
+==========================================================
+
+query
+client                  ?key=value&key2=value2
+                        có thể dùng hoặc không dùng query
+                        key, value do client toàn quyền quyết định
+
+server                  req.query
+
+==========================================================
+params
+
+server                  /:key/:key2/:key3
+                        setup để dùng params
+                        buộc phải truyền data vào param để gửi request
+                        key do server quy định
+
+client                  gọi đúng đường dẫn và truyền data
+                        client quyết định value
+
+===========================================================
+
+app.get('/', function(req,res){
+  res.json()
+})
+
+GET     / 
+Hiển thị giao diện      
+gửi data
+res hiển thị trên giao diện trình duyệt
+
+get one       /data/:id
+get all       /data
+
+=============================================
+POST    /     
+Thêm mới data           thêm mới data
+res không hiển thị trên giao diện trình duyệt
+
+post          /data              
+=========================================
+PUT     /
+Update data             updateOne
+                        updateMany
+
+put           /data/:id
+=========================================
+DELETE  /               
+xóa data
+
+delete        /data/:id
+
+restful API quy chuẩn chung để viết API
+
+=================================================
+
+router                bộ định tuyến
+                      cho tên bảng lên đường dẫn
+                      dễ dàng bảo trì
+
+
+const express = require('express')
+const router = express.Router()
+
+router.get
+
+module.exports = router
+
+app.use('/user', UserRouter)
+
+===================================================
+set up server để nhận body trong request
+
+app.use(express.urlencoded({extended: false}))
+app.use(express.json())
+
+===========================================================
+
+$.ajax              gửi request từ client về server
+                    nhận response từ server trả về client
+
+$.ajax({
+  url: 'link',                    đường dẫn API muốn gọi vào
+  type: 'GET/POST/PUT/DELETE',    phương thức của API
+  data: {....}                    body muốn gửi về API
+})                    
+
+============================================================
+
+browser storage:
+
+localStorage:                 Lưu trữ vĩnh viễn 
+
+sessionStorage                Chỉ lưu trữ data đến khi đóng tab trình duyệt
+
+cookie                        Lưu trữ data đến khi hết hạn
+                              nếu không set hạn thì data tồn tại đến khi tắt trình duyệt
+                              cookie được tự động đính kèm vào request gửi về server
+
+Thường dùng để lưu trữ đăng nhập
+
+function delete_cookie(name) {
+  document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+}                              
