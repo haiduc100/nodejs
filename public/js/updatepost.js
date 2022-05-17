@@ -26,7 +26,7 @@ handleUpdate = (e) => {
 };
 
 $.ajax({
-  url: `/post/${window.location.href.split("/")[6]}`,
+  url: `/post/findpost/${window.location.href.split("/")[6]}`,
   type: "GET",
 })
   .then((data) => {

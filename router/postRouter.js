@@ -26,24 +26,7 @@ router.get("/pagination", (req, res) => {
     });
 });
 
-// find post by author name
-router.get("/:username", (req, res) => {
-  // nó se vào thằng này
-  UserModel.findOne({ username: req.params.username })
-    .then((user) => {
-      if (user) {
-        return PostModel.find({ author: user._id }).populate("author");
-      } else {
-        res.send("User name not found");
-      }
-    })
-    .then((post) => {
-      res.json(post);
-    })
-    .catch((err) => {
-      res.json(err);
-    });
-});
+;
 
 //find post by user id
 router.get("/userpost/:userid", (req, res) => {
@@ -56,9 +39,26 @@ router.get("/userpost/:userid", (req, res) => {
       res.json(err);
     });
 });
-
+// find post by author name
+router.get("/:username", (req, res) => {
+    // nó se vào thằng này
+    UserModel.findOne({ username: req.params.username })
+        .then((user) => {
+            if (user) {
+                return PostModel.find({ author: user._id }).populate("author");
+            } else {
+                res.send("User name not found");
+            }
+        })
+        .then((post) => {
+            res.json(post);
+        })
+        .catch((err) => {
+            res.json(err);
+        });
+})
 // find post by post id
-router.get("/:id", (req, res) => {
+router.get("/findpost/:id", (req, res) => {
   PostModel.findOne({ _id: req.params.id })
     .populate("author")
     .then((post) => {

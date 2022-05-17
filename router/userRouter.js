@@ -5,6 +5,22 @@ const router = require("express").Router();
 const checkDuplicate = require("../controller/UserController");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+var multer = require('multer');
+
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './public/uploads');
+    },
+    filename: function (req, file, cb) {
+        // const arr = file.originalname.split(".");
+        // const ext = arr[arr.length - 1];
+
+        const ext = path.extname(file.originalname)
+        cb(null, file.fieldname + '-' + Date.now() + ext);
+    },
+});
+
+var upload = multer({storage: storage});
 
 router.get("/", async (req, res) => {
     try {
@@ -185,5 +201,18 @@ router.delete("/:id", (req, res) => {
             res.send(err);
         });
 });
+
+
+router.put('/:id/avatar', upload.single('avatar'), async function (req, res, next) {
+    try {
+        await UserModel.updateOne({_id: req.params.id}, {avatar: '/' + req.file.path})
+        res.json("done")
+    } catch (e) {
+        res.json(e)
+    }
+    // req.file là 1 file `avatar` được upload
+    // req.body sẽ giữ thông tin gắn kèm (vd: text fields), nếu có
+});
+
 
 module.exports = router;

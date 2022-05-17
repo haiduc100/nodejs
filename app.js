@@ -29,11 +29,16 @@ app.get("/user/delete/:id", (req, res) => {
   res.sendFile(path.join(__dirname, "./view/User/deleteUser.html"));
 });
 
+
 app.get("/user/login", (req, res) => {
   res.sendFile(path.join(__dirname, "./view/User/login.html"));
 });
 app.get("/user/change_password", (req, res) => {
   res.sendFile(path.join(__dirname, "./view/User/changePass.html"));
+});
+
+app.get("/user/:id/updateInfor", (req, res) => {
+    res.sendFile(path.join(__dirname, "./view/User/changeInfor.html"));
 });
 
 app.get("/user/register", (req, res) => {
@@ -51,14 +56,14 @@ app.get("/post/user", checkLogin, (req, res) => {
 app.get("/post/create", (req, res) => {
   res.sendFile(path.join(__dirname, "./view/Post/create.html"));
 });
-app.get("/post/home/:id", (req, res) => {
-  res.sendFile(path.join(__dirname, "./view/Post/update.html"));
-});
+// app.get("/post/home/:id", (req, res) => {
+//   res.sendFile(path.join(__dirname, "./view/Post/update.html"));
+// });
 
 app.get("/post/user/:id", checkLogin, (req, res) => {
   res.sendFile(path.join(__dirname, "./view/Post/userPost.html"));
 });
-app.get("/post/home/update/:id", (req, res) => {
+app.get("/post/user/update/:id", (req, res) => {
   res.sendFile(path.join(__dirname, "./view/Post/update.html"));
 });
 
@@ -70,7 +75,7 @@ app.get("/comment/create", (req, res) => {
   res.sendFile(path.join(__dirname, "./view/Comment/create.html"));
 });
 
-app.get("/product/home", (req, res) => {
+app.get("/product/home",checkLogin, (req, res) => {
   res.sendFile(path.join(__dirname, "/view/Product/product.html"));
 });
 
